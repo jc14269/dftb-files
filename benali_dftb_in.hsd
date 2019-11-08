@@ -1,0 +1,63 @@
+Geometry = GenFormat { 
+24 C 
+C H O 
+   1  1    0.2559550000   -1.1282600000   -0.9573800000
+   2  1   -1.2708780000   -0.8972530000   -1.0980570000
+   3  1    1.1113700000    0.0903610000   -1.1038530000
+   4  1    0.6347110000    1.3079190000   -0.7707660000
+   5  1   -1.6772620000    0.4832870000   -0.6482220000
+   6  1   -0.7888710000    1.4763800000   -0.4832360000
+   7  2    0.5346040000   -1.9227280000   -1.6525990000
+   8  2    2.1671880000   -0.0413630000   -1.3092830000
+   9  2   -2.7321840000    0.6506070000   -0.4544220000
+  10  2   -1.1025270000    2.4588050000   -0.1444910000
+  11  3   -1.7120640000   -1.0673970000   -2.4332980000
+  12  2   -1.6768790000   -2.0355560000   -2.7091770000
+  13  2   -1.7574300000   -1.6261530000   -0.4385950000
+  14  1    1.6069040000    2.4498600000   -0.5003670000
+  15  3    1.2105400000    3.2726310000    0.4059160000
+  16  3    2.6936450000    2.4716670000   -1.1040850000
+  17  3    0.5917950000   -1.7364170000    0.3700830000
+  18  1    0.4396950000   -0.9503600000    1.4975290000
+  19  1   -0.9053250000   -1.0033020000    2.1812910000
+  20  1    1.4617540000   -0.2547710000    2.0063250000
+  21  2    1.3206980000    0.3438390000    2.8981990000
+  22  2    2.4438550000   -0.2731770000    1.5468060000
+  23  3   -1.2928170000    0.0186330000    2.8222500000
+  24  3   -1.5564740000   -2.0872510000    2.0794240000
+}
+        
+         Driver = ConjugateGradient {
+           MovedAtoms = 1:-1               # Move all atoms in the system
+           MaxForceComponent = 1.0e-4      # Stop if maximal force below 1.0e-4
+           MaxSteps = 0                    # Stop after maximal 100 steps
+           OutputPrefix = "geom.out"       # Final geometry in geom.out.{xyz,gen}
+           ConvergentForcesOnly=no         # Stop the program from exiting badly when the scc doesnt converge
+         }
+         options ={
+         WriteDetailedOut = No
+         }   
+         analysis ={
+         WriteBandOut = No         
+         }
+         
+         Hamiltonian = DFTB {
+         # SCC = yes
+         # SCCTolerance = 1.0E-5
+         # MaxSCCIterations = 5
+         # Charge = 0.0
+          MaxAngularMomentum = {
+C = "p"
+H = "s"
+O = "p"
+ 
+          }
+          solver = DivideAndConquer{}            # Specify the diagonalization routine that you want to use
+          SlaterKosterFiles = Type2FileNames {    # File names from two atom type names
+              Prefix = "mio/"  # Path as prefix
+              Separator = "-"         # Dash between type names
+              Suffix = ".skf"         # Suffix after second type name
+              LowerCaseTypeName = No
+          }
+        }
+        

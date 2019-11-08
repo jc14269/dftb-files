@@ -1,0 +1,44 @@
+Geometry = GenFormat { 
+ <<< "MFI-st1-MeAce-OC-opt.gen"
+}
+        
+         Driver = ConjugateGradient {
+           MovedAtoms = 1:-1               # Move all atoms in the system
+           MaxForceComponent = 1.0e-4      # Stop if maximal force below 1.0e-4
+           MaxSteps = 10                    # Stop after maximal 100 steps
+           OutputPrefix = "zeolite.out"       # Final geometry in geom.out.{xyz,gen}
+           ConvergentForcesOnly=no         # Stop the program from exiting badly when the scc doesnt converge
+         }
+         options ={
+         WriteDetailedOut = No
+         }   
+         analysis ={
+         WriteBandOut = No         
+         }
+         
+         Hamiltonian = DFTB {
+         # SCC = yes
+         # SCCTolerance = 1.0E-5
+         # MaxSCCIterations = 5
+         # Charge = 0.0
+          MaxAngularMomentum = {
+Al = "d"
+C = "p"
+O = "p"
+H = "s"
+Si = "d" 
+          }
+          solver = DivideAndConquer{}            # Specify the diagonalization routine that you want to use
+          SlaterKosterFiles = Type2FileNames {    # File names from two atom type names
+              Prefix = "matsci-0-3/"  # Path as prefix
+              Separator = "-"         # Dash between type names
+              Suffix = ".skf"         # Suffix after second type name
+              LowerCaseTypeName = No
+     }  
+   KPointsAndWeights = SuperCellFolding {
+  1 0 0
+  0 1 0
+  0 0 1
+  0.5 0.5 0
+  }
+}      
